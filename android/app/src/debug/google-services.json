@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "799026686359",
+    "project_id": "mybank-flutter",
+    "storage_bucket": "mybank-flutter.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799026686359:android:9e3e81a1550a0e22fbbcd2",
+        "android_client_info": {
+          "package_name": "com.example.my_bank_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRj5jQRm_7K0GQAozKE6g896CvC3qdXXE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
