@@ -13,24 +13,26 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: rmaincolor,
-      title: Text(title ,
+      elevation: 5,
+      title: Text(
+        title,
         style: TextStyle(
-          color: rbackgroundcolor,
-        fontSize: 30,
-          fontWeight: FontWeight.bold
-      ),),
+            color: rbackgroundcolor, fontSize: 25, fontWeight: FontWeight.bold),
+      ),
       centerTitle: false,
       actions: [
         IconButton(
-          icon: const Icon(Icons.logout , color: rbackgroundcolor, size: 30,),
+          icon: const Icon(
+            Icons.logout,
+            color: rbackgroundcolor,
+            size: 25,
+          ),
           onPressed: () {
-            showtoaster(
-                color: greenM,
-                msg:'You are logged out.');
-           // ScaffoldMessenger.of(context).showSnackBar(
-             // const SnackBar(content: Text("You are logged out.")),
-         //   );
-              navigateAndFinish(context, LoginScreen());
+            showtoaster(color: greenM, msg: 'You are logged out.');
+            // ScaffoldMessenger.of(context).showSnackBar(
+            // const SnackBar(content: Text("You are logged out.")),
+            //   );
+            navigateAndFinish(context, LoginScreen());
           },
         ),
       ],
@@ -38,5 +40,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight); //لتعريف Scaffold بارتفاع appbar
+  Size get preferredSize =>
+      const Size.fromHeight(kToolbarHeight); //لتعريف Scaffold بارتفاع appbar
 }

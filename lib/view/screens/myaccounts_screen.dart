@@ -57,74 +57,88 @@ class _MyAccountsState extends State<MyAccounts> {
       body: user == null
           ? const Center(child: Text("Not logged in"))
           : StreamBuilder<DocumentSnapshot>(
-        stream: _firestore.collection('users').doc(user.uid).snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Center(child: Text("Error fetching data: ${snapshot.error}"));
-          }
+              stream: _firestore.collection('users').doc(user.uid).snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Center(
+                      child: Text("Error fetching data: ${snapshot.error}"));
+                }
 
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
 
-          final userData = snapshot.data?.data() as Map<String, dynamic>?;
-          final List<dynamic>? banksData = userData?['banks'];
+                final userData = snapshot.data?.data() as Map<String, dynamic>?;
+                final List<dynamic>? banksData = userData?['banks'];
 
-          if (banksData == null || banksData.isEmpty) {
-            return const Center(child: Text("No bank accounts added yet. Click '+' to add one."));
-          }
+                if (banksData == null || banksData.isEmpty) {
+                  return const Center(
+                      child: Text(
+                          "No bank accounts added yet. Click '+' to add one."));
+                }
 
-          return ListView.builder(
-            physics: const BouncingScrollPhysics(),
-            itemCount: banksData.length,
-            itemBuilder: (context, index) {
-              final bank = banksData[index] as Map<String, dynamic>;
-              return CustomBankCard(
-                bankName: bank['bankName'] as String?,
-                balance: bank['amount'] != null ? (bank['amount'] as num).toStringAsFixed(2) : '0.00',
-                percentage: bank['percentage'] != null ? (bank['percentage'] as num).toStringAsFixed(2) : '0',
-                startDate: bank['startDate'] != null ? (bank['startDate'] as Timestamp).toDate() : null,
-                endDate: bank['endDate'] != null ? (bank['endDate'] as Timestamp).toDate() : null,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AccountDetailsScreen(bankDetails: bank),
-                    ),
-                  );
-                },
-                onRemove: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text("Confirm Removal"),
-                        content: const Text("Are you sure you want to remove this bank account?"),
-                        actions: <Widget>[
-                          TextButton(
-                            child: const Text("Cancel"),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
+                return ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: banksData.length,
+                  itemBuilder: (context, index) {
+                    final bank = banksData[index] as Map<String, dynamic>;
+                    return CustomBankCard(
+                      bankName: bank['bankName'] as String?,
+                      balance: bank['amount'] != null
+                          ? (bank['amount'] as num).toStringAsFixed(2)
+                          : '0.00',
+                      percentage: bank['percentage'] != null
+                          ? (bank['percentage'] as num).toStringAsFixed(2)
+                          : '0',
+                      startDate: bank['startDate'] != null
+                          ? (bank['startDate'] as Timestamp).toDate()
+                          : null,
+                      endDate: bank['endDate'] != null
+                          ? (bank['endDate'] as Timestamp).toDate()
+                          : null,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                AccountDetailsScreen(bankDetails: bank),
                           ),
-                          TextButton(
-                            style: TextButton.styleFrom(foregroundColor: Colors.red),
-                            child: const Text("Remove"),
-                            onPressed: () {
-                              _removeBankAccount(index);
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-              );
-            },
-          );
-        },
-      ),
+                        );
+                      },
+                      onRemove: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text("Confirm Removal"),
+                              content: const Text(
+                                  "Are you sure you want to remove this bank account?"),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: const Text("Cancel"),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                TextButton(
+                                  style: TextButton.styleFrom(
+                                      foregroundColor: Colors.red),
+                                  child: const Text("Remove"),
+                                  onPressed: () {
+                                    _removeBankAccount(index);
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                    );
+                  },
+                );
+              },
+            ),
     );
   }
 }
@@ -160,6 +174,8 @@ class CustomBankCard extends StatelessWidget {
           onTap: onTap,
           borderRadius: BorderRadius.circular(12),
           child: Card(
+            //card color
+            color: Color(0xffd4d7f3),
             elevation: 10,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
@@ -176,6 +192,7 @@ class CustomBankCard extends StatelessWidget {
                         Text(
                           bankName ?? "Bank Name Not Available",
                           style: const TextStyle(
+                            color: Color(0xff3C0061),
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
                           ),
@@ -187,7 +204,9 @@ class CustomBankCard extends StatelessWidget {
                             fontSize: 16,
                           ),
                         ),
-                        if (percentage != null && startDate != null && endDate != null)
+                        if (percentage != null &&
+                            startDate != null &&
+                            endDate != null)
                           Text(
                             "Interest: $percentage%, Start: ${DateFormat('yyyy-MM-dd').format(startDate!)}, End: ${DateFormat('yyyy-MM-dd').format(endDate!)}",
                             style: const TextStyle(
@@ -200,7 +219,8 @@ class CustomBankCard extends StatelessWidget {
                   ),
                   if (onRemove != null)
                     IconButton(
-                      icon: const Icon(Icons.delete_forever, color: Colors.redAccent),
+                      icon: const Icon(Icons.delete_forever,
+                          color: Colors.redAccent),
                       onPressed: onRemove,
                     ),
                 ],

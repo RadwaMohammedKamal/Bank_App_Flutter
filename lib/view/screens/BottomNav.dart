@@ -5,8 +5,6 @@ import 'addaccount_screen.dart';
 import 'currency_api/currency_screen.dart';
 import 'myaccounts_screen.dart';
 import 'news_app/news_screen.dart';
-import 'news_screen.dart';
-
 
 class BottomNav extends StatefulWidget {
   const BottomNav({super.key});
@@ -29,13 +27,14 @@ class _BottomNavState extends State<BottomNav> {
     final List<Widget> pages = [
       MyAccounts(changeTab: changeTab),
       AddAccount(changeTab: changeTab),
-      NewsScreen(),
-      CurrencyScreen(),
+      NewsScreen(changeTab: changeTab),
+      CurrencyScreen(changeTab: changeTab),
     ];
 
     return Scaffold(
       bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.white,
+        backgroundColor: rbackgroundcolor,
+        //  backgroundColor: Colors.white,
         color: rmaincolor,
         index: currentTabIndex,
         onTap: changeTab,
@@ -47,7 +46,7 @@ class _BottomNavState extends State<BottomNav> {
         ],
       ),
       body: pages[currentTabIndex],
+      //  backgroundColor: Colors.transparent,
     );
-
   }
 }

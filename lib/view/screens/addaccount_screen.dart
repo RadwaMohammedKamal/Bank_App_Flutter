@@ -50,7 +50,7 @@ class _AddAccountState extends State<AddAccount> {
     "Arab Banking Corporation",
     "Export Development Bank of Egypt",
     "Arab International Bank",
-    "Citi Bank N A / Egypt" ,
+    "Citi Bank N A / Egypt",
     "Arab Bank PLC",
     "Mashreq Bank",
     "National Bank of Greece",
@@ -66,7 +66,10 @@ class _AddAccountState extends State<AddAccount> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<void> _addBankAccount() async {
-    if (_formKey.currentState!.validate() && selectedBank != "Select Bank" && startDate != null && endDate != null) {
+    if (_formKey.currentState!.validate() &&
+        selectedBank != "Select Bank" &&
+        startDate != null &&
+        endDate != null) {
       try {
         final User? user = _auth.currentUser;
         if (user != null) {
@@ -99,7 +102,8 @@ class _AddAccountState extends State<AddAccount> {
       );
     } else if (startDate == null || endDate == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select both start and end dates.')),
+        const SnackBar(
+            content: Text('Please select both start and end dates.')),
       );
     }
   }
@@ -121,8 +125,10 @@ class _AddAccountState extends State<AddAccount> {
                 DropdownButtonFormField<String>(
                   decoration: InputDecoration(
                     labelText: "Select Bank",
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8)),
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 12, vertical: 10),
                   ),
                   value: selectedBank,
                   items: banks.map((String bank) {
@@ -136,7 +142,9 @@ class _AddAccountState extends State<AddAccount> {
                       selectedBank = newValue!;
                     });
                   },
-                  validator: (value) => value == null || value == "Select Bank" ? "You must choose the bank." : null,
+                  validator: (value) => value == null || value == "Select Bank"
+                      ? "You must choose the bank."
+                      : null,
                 ),
                 const SizedBox(height: 40),
                 Row(
@@ -179,7 +187,8 @@ class _AddAccountState extends State<AddAccount> {
                             return "Please enter a valid number";
                           }
                           final percentage = double.tryParse(value);
-                          if (percentage != null && (percentage < 0 || percentage > 100)) {
+                          if (percentage != null &&
+                              (percentage < 0 || percentage > 100)) {
                             return "Percentage must be between 0 and 100.";
                           }
                           return null;
@@ -188,9 +197,7 @@ class _AddAccountState extends State<AddAccount> {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 20),
-
                 Row(
                   children: [
                     Expanded(
@@ -200,11 +207,17 @@ class _AddAccountState extends State<AddAccount> {
                           TextFormField(
                             decoration: InputDecoration(
                               labelText: 'Start Date',
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                              prefixIcon: Icon(Icons.calendar_today, color: rmaincolor),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8)),
+                              prefixIcon:
+                                  Icon(Icons.calendar_today, color: rmaincolor),
                             ),
                             readOnly: true,
-                            controller: TextEditingController(text: startDate != null ? DateFormat('yyyy-MM-dd').format(startDate!) : ''),
+                            controller: TextEditingController(
+                                text: startDate != null
+                                    ? DateFormat('yyyy-MM-dd')
+                                        .format(startDate!)
+                                    : ''),
                             onTap: () async {
                               final DateTime? pickedDate = await showDatePicker(
                                 context: context,
@@ -215,8 +228,10 @@ class _AddAccountState extends State<AddAccount> {
                               if (pickedDate != null) {
                                 setState(() {
                                   startDate = pickedDate;
-                                  if (endDate != null && endDate!.isBefore(startDate!)) {
-                                    endDate = null; // Reset end date if start date changes
+                                  if (endDate != null &&
+                                      endDate!.isBefore(startDate!)) {
+                                    endDate =
+                                        null; // Reset end date if start date changes
                                   }
                                 });
                               }
@@ -228,28 +243,35 @@ class _AddAccountState extends State<AddAccount> {
                               return null;
                             },
                           ),
-
                           const SizedBox(height: 30),
-
                           TextFormField(
                             decoration: InputDecoration(
                               labelText: 'End Date',
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                              prefixIcon: Icon(Icons.calendar_today, color: rmaincolor),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8)),
+                              prefixIcon:
+                                  Icon(Icons.calendar_today, color: rmaincolor),
                             ),
                             readOnly: true,
-                            controller: TextEditingController(text: endDate != null ? DateFormat('yyyy-MM-dd').format(endDate!) : ''),
+                            controller: TextEditingController(
+                                text: endDate != null
+                                    ? DateFormat('yyyy-MM-dd').format(endDate!)
+                                    : ''),
                             onTap: () async {
                               if (startDate == null) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Please select the start date first.')),
+                                  const SnackBar(
+                                      content: Text(
+                                          'Please select the start date first.')),
                                 );
                                 return;
                               }
                               final DateTime? pickedDate = await showDatePicker(
                                 context: context,
-                                initialDate: startDate!.add(const Duration(days: 1)),
-                                firstDate: startDate!.add(const Duration(days: 1)),
+                                initialDate:
+                                    startDate!.add(const Duration(days: 1)),
+                                firstDate:
+                                    startDate!.add(const Duration(days: 1)),
                                 lastDate: DateTime(2100),
                               );
                               if (pickedDate != null) {
@@ -262,7 +284,9 @@ class _AddAccountState extends State<AddAccount> {
                               if (endDate == null) {
                                 return 'Please select the end date';
                               }
-                              if (startDate != null && endDate != null && endDate!.isBefore(startDate!)) {
+                              if (startDate != null &&
+                                  endDate != null &&
+                                  endDate!.isBefore(startDate!)) {
                                 return 'End date cannot be before start date';
                               }
                               return null;
@@ -273,9 +297,7 @@ class _AddAccountState extends State<AddAccount> {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 30),
-
                 Center(
                   child: CustomButton(
                     onTap: _addBankAccount,
@@ -283,7 +305,8 @@ class _AddAccountState extends State<AddAccount> {
                   ),
                 ),
                 Center(
-                  child: Image.asset('assets/images/Na_Nov_15.jpg' ,
+                  child: Image.asset(
+                    'assets/images/Na_Nov_15.jpg',
                     height: 250,
                   ),
                 ),

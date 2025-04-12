@@ -1,16 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import '../../components/customAppbar.dart';
+import '../../constants/color.dart';
 import 'currency_api_service.dart';
 import 'models.dart';
 
 class CurrencyScreen extends StatefulWidget {
+  final Function(int) changeTab;
+
+  const CurrencyScreen({super.key, required this.changeTab});
   @override
   _CurrencyScreenState createState() => _CurrencyScreenState();
 }
 
 class _CurrencyScreenState extends State<CurrencyScreen> {
   late Future<CurrencyResponse> currencyResponse;
-  final List<String> toCurrencies = ["USD", "EUR", "GBP", "INR", "EGP", "SAR", "JPY"];
+  final List<String> toCurrencies = [
+    "USD",
+    "EUR",
+    "GBP",
+    "INR",
+    "EGP",
+    "SAR",
+    "JPY"
+  ];
   String selectedCurrency = 'EGP'; // Default currency is set to EGP
 
   @override
@@ -22,22 +35,10 @@ class _CurrencyScreenState extends State<CurrencyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xff616AE6),
-        title: Text(
-          'Currency Rates',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            letterSpacing: 1.5,
-          ),
-        ),
-        centerTitle: true,
-        elevation: 10,
-      ),
+      appBar: CustomAppBar(title: "Currency Rates"),
+      backgroundColor: rbackgroundcolor,
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.only(right: 16, left: 16, top: 16),
         child: Column(
           children: [
             // Dropdown for selecting the currency
@@ -59,14 +60,16 @@ class _CurrencyScreenState extends State<CurrencyScreen> {
                 onChanged: (String? newValue) {
                   setState(() {
                     selectedCurrency = newValue!;
-                    currencyResponse = CurrencyApiService().getRates(selectedCurrency);
+                    currencyResponse =
+                        CurrencyApiService().getRates(selectedCurrency);
                   });
                 },
                 isExpanded: true,
                 underline: SizedBox(),
                 dropdownColor: Colors.white,
                 icon: Icon(Icons.arrow_drop_down, color: Colors.deepPurple),
-                items: toCurrencies.map<DropdownMenuItem<String>>((String value) {
+                items:
+                    toCurrencies.map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(
@@ -95,7 +98,8 @@ class _CurrencyScreenState extends State<CurrencyScreen> {
                   );
                 } else if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
-                } else if (!snapshot.hasData || snapshot.data!.conversionRates.isEmpty) {
+                } else if (!snapshot.hasData ||
+                    snapshot.data!.conversionRates.isEmpty) {
                   return Center(child: Text('No rates available.'));
                 }
 
@@ -114,7 +118,8 @@ class _CurrencyScreenState extends State<CurrencyScreen> {
                         ),
                         color: Color(0xffd4d7f3),
                         child: ListTile(
-                          contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 12, horizontal: 20),
                           title: Text(
                             '$selectedCurrency to $currency',
                             style: TextStyle(
