@@ -419,7 +419,7 @@ class NewsScreen extends StatelessWidget {
                   child: ListTile(
                     contentPadding: EdgeInsets.zero,
                     onTap: () {
-                      Get.to(() => NewsDetailScreen(article: article));
+                      Get.to(() => NewsDetailScreen(article: Rx(article)));
                     },
                     title: Text(
                       article.title ?? "No Title",

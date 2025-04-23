@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:my_bank_app/view/screens/news_app/news_screen.dart';
 import 'view/constants/color.dart';
 import 'view/screens/splash_screen.dart';
 
@@ -23,7 +22,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: rmaincolor),
         useMaterial3: true,
       ),
-      home: NewsScreen(changeTab: (int ) {  },),
+      home: const SplashScreen(),
     );
   }
 }
