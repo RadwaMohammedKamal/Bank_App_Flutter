@@ -91,7 +91,7 @@ class AccountDetailsScreen extends StatelessWidget {
         title: Text(
           "${bankName ?? 'Account'} Details",
           style: const TextStyle(
-              fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white),
+              fontSize: 23, fontWeight: FontWeight.w600, color: Colors.white),
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
