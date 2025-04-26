@@ -40,21 +40,13 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   local_auth:
-  dio:
   get: ^4.6.6
-  curl_logger_dio_interceptor:
-  flutter_bloc:
-  bloc:
   cloud_firestore:
   firebase_core:
   firebase_auth:
-  shared_preferences:
-  smooth_page_indicator:
   conditional_builder_null_safety:
   fluttertoast:
   animated_splash_screen:
-  flutter_svg:
-  intl:
   curved_navigation_bar:
   fl_chart:
 

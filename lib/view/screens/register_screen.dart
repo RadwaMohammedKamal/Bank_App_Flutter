@@ -89,7 +89,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 const SizedBox(height: 40),
                 Center(
                   child: Text(
-                    'REGISTER',
+                    'Sign UP',
                     style: Theme.of(context).textTheme.displaySmall?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: rmaincolor,

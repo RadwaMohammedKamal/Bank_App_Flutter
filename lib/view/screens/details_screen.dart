@@ -56,7 +56,6 @@ class AccountDetailsScreen extends StatelessWidget {
 
       final double interestFull = _calculateBankInterest(
           initialBalance, annualInterestRate, startDate, endDate);
-
       projectedFinalBalance = initialBalance + interestFull;
 
       if (now.isAfter(endDate) || now.isAtSameMomentAs(endDate)) {
@@ -104,6 +103,7 @@ class AccountDetailsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // عرض تفاصيل الحساب
             Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 20),
@@ -134,6 +134,7 @@ class AccountDetailsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
+            // عرض تفاصيل الفائدة
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
@@ -200,6 +201,7 @@ class AccountDetailsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
+            // عرض الرسم البياني
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
@@ -308,21 +310,28 @@ class AccountDetailsScreen extends StatelessWidget {
   }
 }
 
-//comp
-// import 'dart:math';
-// import 'package:fl_chart/fl_chart.dart';
-// import 'package:flutter/material.dart';
-// import '../constants/color.dart';
-// import 'package:intl/intl.dart';
-//
 // class AccountDetailsScreen extends StatelessWidget {
 //   const AccountDetailsScreen({super.key, required this.bankDetails});
 //
 //   final Map<String, dynamic> bankDetails;
 //
+//   int _calculateBankDays(DateTime startDate, DateTime endDate) {
+//     int d1 = startDate.day;
+//     int d2 = endDate.day;
+//     int m1 = startDate.month;
+//     int m2 = endDate.month;
+//     int y1 = startDate.year;
+//     int y2 = endDate.year;
+//
+//     if (d1 == 31) d1 = 30;
+//     if (d2 == 31 && d1 == 30) d2 = 30;
+//
+//     return (y2 - y1) * 360 + (m2 - m1) * 30 + (d2 - d1);
+//   }
+//
 //   double _calculateBankInterest(
 //       double principal, double rate, DateTime startDate, DateTime endDate) {
-//     final days = endDate.difference(startDate).inDays;
+//     final days = _calculateBankDays(startDate, endDate);
 //     final years = days / 360;
 //     return principal * pow(1 + rate, years) - principal;
 //   }
@@ -351,24 +360,21 @@ class AccountDetailsScreen extends StatelessWidget {
 //         endDate != null) {
 //       final double annualInterestRate = percentage / 100;
 //
-//       final int totalDays = endDate.difference(startDate).inDays;
-//       final double totalYears = totalDays / 360;
+//       final double interestFull = _calculateBankInterest(
+//           initialBalance, annualInterestRate, startDate, endDate);
 //
-//       projectedFinalBalance =
-//           initialBalance * pow(1 + annualInterestRate, totalYears);
+//       projectedFinalBalance = initialBalance + interestFull;
 //
 //       if (now.isAfter(endDate) || now.isAtSameMomentAs(endDate)) {
-//         calculatedInterest = projectedFinalBalance - initialBalance;
+//         calculatedInterest = interestFull;
 //         currentBalance = projectedFinalBalance;
 //         finalBalanceAt = endDate;
 //         finalBalanceValue = projectedFinalBalance;
 //       } else if (now.isAfter(startDate)) {
-//         final int elapsedDays = now.difference(startDate).inDays;
-//         final double elapsedYears = elapsedDays / 360;
-//
-//         currentBalance =
-//             initialBalance * pow(1 + annualInterestRate, elapsedYears);
-//         calculatedInterest = currentBalance - initialBalance;
+//         final double interestUntilNow = _calculateBankInterest(
+//             initialBalance, annualInterestRate, startDate, now);
+//         currentBalance = initialBalance + interestUntilNow;
+//         calculatedInterest = interestUntilNow;
 //       } else {
 //         calculatedInterest = 0;
 //         currentBalance = initialBalance;
@@ -391,7 +397,7 @@ class AccountDetailsScreen extends StatelessWidget {
 //         title: Text(
 //           "${bankName ?? 'Account'} Details",
 //           style: const TextStyle(
-//               fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white),
+//               fontSize: 23, fontWeight: FontWeight.w600, color: Colors.white),
 //         ),
 //         leading: IconButton(
 //           icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
@@ -452,7 +458,7 @@ class AccountDetailsScreen extends StatelessWidget {
 //                 children: [
 //                   _buildDetailRow(
 //                       "Initial Balance",
-//                       "${initialBalance?.toStringAsFixed(2) ?? 'N/A'} EGP", // تغيير إلى EGP
+//                       "${initialBalance?.toStringAsFixed(2) ?? 'N/A'} EGP",
 //                       Icons.account_balance_wallet),
 //                   const Divider(thickness: 1),
 //                   _buildDetailRow(

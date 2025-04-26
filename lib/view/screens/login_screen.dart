@@ -170,7 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         navigateAndFinish(context, const RegisterScreen());
                       },
                       child: Text(
-                        'Register',
+                        'Sign UP',
                         style: TextStyle(color: rmaincolor),
                       ),
                     ),
