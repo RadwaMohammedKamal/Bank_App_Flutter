@@ -34,7 +34,6 @@ class _BottomNavState extends State<BottomNav> {
     return Scaffold(
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: rbackgroundcolor,
-        //  backgroundColor: Colors.white,
         color: rmaincolor,
         index: currentTabIndex,
         onTap: changeTab,
@@ -46,7 +45,6 @@ class _BottomNavState extends State<BottomNav> {
         ],
       ),
       body: pages[currentTabIndex],
-      //  backgroundColor: Colors.transparent,
     );
   }
 }
