@@ -31,7 +31,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Future<void> registerUser() async {
     try {
-      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+      UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text,
       );
@@ -91,10 +92,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: Text(
                     'Sign UP',
                     style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: rmaincolor,
-                      fontSize: 50,
-                    ),
+                          fontWeight: FontWeight.bold,
+                          color: rmaincolor,
+                          fontSize: 50,
+                        ),
                   ),
                 ),
                 const SizedBox(height: 30),
@@ -161,7 +162,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ConditionalBuilder(
                   condition: true,
                   builder: (context) => CustomButton(
-                    text: 'REGISTER'.toUpperCase(),
+                    text: 'Sign UP'.toUpperCase(),
                     onTap: () {
                       if (formKey.currentState!.validate()) {
                         registerUser();
@@ -169,7 +170,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     },
                   ),
                   fallback: (context) =>
-                  const Center(child: CircularProgressIndicator()),
+                      const Center(child: CircularProgressIndicator()),
                 ),
                 const SizedBox(height: 15),
                 Row(
