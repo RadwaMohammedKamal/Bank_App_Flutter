@@ -49,6 +49,7 @@ dependencies:
   animated_splash_screen:
   curved_navigation_bar:
   fl_chart:
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:
